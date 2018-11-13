@@ -1,0 +1,58 @@
+version: "2.0"
+
+services:
+  app:
+    build:
+      context: ./docker
+      dockerfile: app.dockerfile
+    working_dir: /var/www
+    volumes:
+        - ./:/var/www
+    environment:
+        - "APP_NAME=Alegra Test"
+    networks:
+      - alegra
+
+  web:
+    build:
+      context: ./docker
+      dockerfile: web.dockerfile
+    ports:
+      - "80:80"
+    working_dir: /var/www
+    networks:
+      - alegra
+    volumes_from:
+      - app
+
+  redis:
+    image: redis:latest
+    ports:
+        - "6379:6379"
+    networks:
+      - alegra
+
+  beanstalkd:
+    build:
+      context: ./docker
+      dockerfile: beanstalkd.dockerfile
+    networks:
+      - alegra
+    ports:
+      - "11300:11300"
+
+  postgres:
+    image: postgres:10.5
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: alegra_test
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: secret
+    networks:
+      - alegra
+
+networks:
+  alegra:
+    external:
+      name: alegra
