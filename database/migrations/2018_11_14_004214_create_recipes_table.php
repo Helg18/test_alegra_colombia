@@ -32,8 +32,8 @@ class CreateRecipesTable extends Migration
             $table->foreign('recipe_id')->references('id')->on('recipes')->onUpdate('cascade')->onDelete('cascade');
 
 
-            $table->index('ingredient_id', 'ingredients_recipes_id_foreign');
-            $table->index('recipe_id', 'ingredients_recipe_id_foreign');
+            $table->index('ingredient_id', 'ingredients_recipes_ingredient_id_foreign');
+            $table->index('recipe_id', 'ingredients_recipe_recipe_id_foreign');
         });
     }
 
