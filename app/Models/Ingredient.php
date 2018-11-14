@@ -10,4 +10,9 @@ class Ingredient extends Model
         'id',
         'name'
     ];
+
+    public function store()
+    {
+        return $this->hasOne(Store::class);
+    }
 }
