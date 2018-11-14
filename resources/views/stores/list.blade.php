@@ -2,6 +2,7 @@
 @section('body')
     <div class="container">
         <div class="col-lg-8 col-md-8 col-sm-8">
+            <h3>Showing ingredient available on stores</h3>
             <table class="table table-bordered table-hover">
                 <thead>
                 <td>ID</td>

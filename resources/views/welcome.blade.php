@@ -15,7 +15,7 @@
             <a href="{{route('ingredient.index')}}">View Ingredients</a>
             <a href="{{route('recipe.index')}}">View Recipes</a>
             <a href="{{route('purchase.index')}}">View Purchases</a>
-            <a href="{{route('store.index')}}">View Purchases</a>
+            <a href="{{route('store.index')}}">View Stores</a>
         </div>
     </div>
 </div>
