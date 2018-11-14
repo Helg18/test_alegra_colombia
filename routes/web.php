@@ -10,3 +10,6 @@ Route::resource('order', 'OrderController')->only('store', 'show', 'index');
 
 // Ingredients
 Route::resource('ingredient', 'IngredientController')->only('index');
+
+// Recipes
+Route::resource('recipe', 'RecipeController')->only('index');
