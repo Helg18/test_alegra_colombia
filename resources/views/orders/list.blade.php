@@ -10,7 +10,11 @@
         @foreach($orders as $order)
             <tr>
                 <td>{{ $order->id }}</td>
-                <td>{{ $order->getPlateName() }}</td>
+                @if($order->getPlateName())
+                    <td>{{ $order->getPlateName() }}</td>
+                @else
+                    <td>Unknown</td>
+                @endif
                 <td>{{ $order->status }}</td>
             </tr>
         @endforeach

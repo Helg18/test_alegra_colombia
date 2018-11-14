@@ -36,16 +36,13 @@ class OrderController extends Controller
 
     public function store()
     {
-        // Get one recipe
-        $recipe = $this->recipeRepository->getRamdonRecipe();
-
         try {
             $this->orderRepository->create([
-                'recipe_id' => $recipe->id,
+                'recipe_id' => null,
                 'status'    => 'open'
             ]);
         } catch (\Exception $exception){
-            logger("An error has been ocurred while triyed save a new order. ". $exception->getMessage());
+            logger("An error has been occurred while tried save a new order. ". $exception->getMessage());
             return redirect()->back()->withErrors($exception->getMessage());
         }
 
