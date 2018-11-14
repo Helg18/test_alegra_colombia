@@ -12,7 +12,7 @@
 
         <div class="links">
             <a href="{{route('order.index')}}">View Orders</a>
-            <a href="https://laracasts.com">View Ingredients</a>
+            <a href="{{route('ingredient.index')}}">View Ingredients</a>
             <a href="https://laravel-news.com">View Recipes</a>
             <a href="https://nova.laravel.com">View Purchases</a>
         </div>
