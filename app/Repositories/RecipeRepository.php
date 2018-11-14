@@ -26,4 +26,9 @@ class RecipeRepository extends AbstractRepository
         return $query->orderBy('recipes.id', 'desc');
     }
 
+    public function getRamdonRecipe()
+    {
+        return $this->model->all()->random();
+    }
+
 }
