@@ -7,15 +7,13 @@
                 <td>ID</td>
                 <td>Ingredient</td>
                 <td>Quantity</td>
-                <td>Date</td>
                 </thead>
                 <tbody>
-                @foreach($purchases as $purchase)
+                @foreach($storage as $ingredient)
                     <tr>
-                        <td>{{ $purchase->id }}</td>
-                        <td>{{ $purchase->getIngredientName() }}</td>
-                        <td>{{ $purchase->quantity }}</td>
-                        <td>{{ $purchase->created_at }}</td>
+                        <td>{{ $ingredient->id }}</td>
+                        <td>{{ $ingredient->getIngredientName() }}</td>
+                        <td>{{ $ingredient->quantity }}</td>
                     </tr>
                 @endforeach
                 </tbody>

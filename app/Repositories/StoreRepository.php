@@ -18,13 +18,13 @@ class StoreRepository extends AbstractRepository
 
     public function search(array $filters = [], $distinct = true)
     {
-        $query = $this->model->select('store.*');
+        $query = $this->model->select('stores.*');
 
         if ($distinct) {
             $query->distinct();
         }
 
-        return $query->orderBy('store.id', 'desc');
+        return $query->orderBy('stores.id', 'desc');
     }
 
 }

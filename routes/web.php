@@ -16,3 +16,6 @@ Route::resource('recipe', 'RecipeController')->only('index');
 
 // Purchases
 Route::resource('purchase', 'PurchaseController')->only('index');
+
+// Store
+Route::resource('store', 'StoreController')->only('index');
