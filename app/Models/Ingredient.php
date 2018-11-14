@@ -20,4 +20,9 @@ class Ingredient extends Model
     {
         return $this->hasMany(Purchase::class);
     }
+
+    public function recipes()
+    {
+        return $this->belongsToMany(Recipe::class)->withPivot('quantity')->withTimestamps();
+    }
 }

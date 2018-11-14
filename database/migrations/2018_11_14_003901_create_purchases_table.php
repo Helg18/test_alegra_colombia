@@ -20,7 +20,7 @@ class CreatePurchasesTable extends Migration
             $table->timestamps();
 
             $table->foreign('ingredient_id')->references('id')->on('ingredients')->onUpdate('cascade')->onDelete('cascade');
-            $table->index('ingredient_id', 'ingredients_id_foreign');
+            $table->index('ingredient_id', 'ingredients_purchase_id_foreign');
         });
     }
 
