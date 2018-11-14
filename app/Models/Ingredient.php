@@ -15,4 +15,9 @@ class Ingredient extends Model
     {
         return $this->hasOne(Store::class);
     }
+
+    public function purchases()
+    {
+        return $this->hasMany(Purchase::class);
+    }
 }
