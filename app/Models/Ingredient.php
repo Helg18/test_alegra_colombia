@@ -21,6 +21,11 @@ class Ingredient extends Model
         return $this->hasMany(Purchase::class);
     }
 
+    public function requisitions()
+    {
+        return $this->hasMany(Requisition::class);
+    }
+
     public function recipes()
     {
         return $this->belongsToMany(Recipe::class)->withTimestamps()->withPivot(['quantity']);
