@@ -14,6 +14,11 @@ class Order extends Model
 
     public function recipe()
     {
-        return $this->belongsTo(Order::class);
+        return $this->belongsTo(Recipe::class);
+    }
+
+    public function getPlateName()
+    {
+        return $this->recipe ? $this->recipe->name : null;
     }
 }

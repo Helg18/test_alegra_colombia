@@ -28,6 +28,12 @@ class OrderController extends Controller
         $this->orderRepository = $orderRepository;
     }
 
+    public function index()
+    {
+        $orders = $this->orderRepository->search()->get();
+        return view('orders.list', compact('orders'));
+    }
+
     public function store()
     {
         // Get one recipe
