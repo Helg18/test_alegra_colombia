@@ -13,3 +13,6 @@ Route::resource('ingredient', 'IngredientController')->only('index');
 
 // Recipes
 Route::resource('recipe', 'RecipeController')->only('index');
+
+// Purchases
+Route::resource('purchase', 'PurchaseController')->only('index');

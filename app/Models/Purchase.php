@@ -17,4 +17,9 @@ class Purchase extends Model
     {
         return $this->belongsTo(Ingredient::class);
     }
+
+    public function getIngredientName()
+    {
+        return $this->ingredient ? $this->ingredient->name : null;
+    }
 }

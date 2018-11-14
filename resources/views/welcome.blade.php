@@ -14,7 +14,7 @@
             <a href="{{route('order.index')}}">View Orders</a>
             <a href="{{route('ingredient.index')}}">View Ingredients</a>
             <a href="{{route('recipe.index')}}">View Recipes</a>
-            <a href="https://nova.laravel.com">View Purchases</a>
+            <a href="{{route('purchase.index')}}">View Purchases</a>
         </div>
     </div>
 </div>

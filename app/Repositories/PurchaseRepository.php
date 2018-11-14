@@ -18,13 +18,13 @@ class PurchaseRepository extends AbstractRepository
 
     public function search(array $filters = [], $distinct = true)
     {
-        $query = $this->model->select('purchase.*');
+        $query = $this->model->select('purchases.*');
 
         if ($distinct) {
             $query->distinct();
         }
 
-        return $query->orderBy('purchase.id', 'desc');
+        return $query->orderBy('purchases.id', 'desc');
     }
 
 }
