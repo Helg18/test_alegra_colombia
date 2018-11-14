@@ -2,9 +2,11 @@
 @section('body')
     <table class="table table-bordered table-hover">
         <thead>
+        <tr>
             <td>ID</td>
             <td>Plate</td>
             <td>Status</td>
+        </tr>
         </thead>
         <tbody>
         @foreach($orders as $order)
