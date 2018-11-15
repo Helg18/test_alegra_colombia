@@ -10,11 +10,6 @@ use App\Repositories\RecipeRepository;
 class OrderController extends Controller
 {
     /**
-     * @var RecipeRepository
-     */
-    private $recipeRepository;
-
-    /**
      * @var OrderRepository
      */
     private $orderRepository;
@@ -24,16 +19,14 @@ class OrderController extends Controller
      * @param RecipeRepository $recipeRepository
      * @param OrderRepository $orderRepository
      */
-    public function __construct(RecipeRepository $recipeRepository, OrderRepository $orderRepository)
+    public function __construct(OrderRepository $orderRepository)
     {
-        $this->recipeRepository = $recipeRepository;
         $this->orderRepository = $orderRepository;
     }
 
     public function index()
     {
-        $orders = $this->orderRepository->search()->get();
-        return view('orders.list', compact('orders'));
+        return view('orders.list');
     }
 
     /**
