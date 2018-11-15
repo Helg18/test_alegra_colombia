@@ -18,6 +18,7 @@ class CreateRequisitionsTable extends Migration
             $table->unsignedInteger('order_id');
             $table->unsignedInteger('ingredient_id');
             $table->integer('quantity');
+            $table->string('description');
             $table->timestamps();
 
             $table->foreign('ingredient_id')->references('id')->on('ingredients')->onUpdate('cascade')->onDelete('cascade');

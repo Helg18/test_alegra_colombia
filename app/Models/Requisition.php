@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Requisition extends Model
 {
-    protected $fillable = ['id', 'order_id', 'ingredient_id', 'quantity'];
+    protected $fillable = ['id', 'order_id', 'ingredient_id', 'quantity', 'description'];
 
     public function order()
     {
