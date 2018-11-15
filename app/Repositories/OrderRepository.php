@@ -24,6 +24,10 @@ class OrderRepository extends AbstractRepository
             $query->distinct();
         }
 
+        if (isset($filters['ingredient_id']) && $filters['ingredient_id']){
+            $query->ofIngredientID();
+        }
+
         return $query->orderBy('orders.id', 'desc');
     }
 

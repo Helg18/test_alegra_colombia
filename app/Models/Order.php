@@ -21,4 +21,9 @@ class Order extends Model
     {
         return $this->recipe ? $this->recipe->name : null;
     }
+
+    public function scopeOfIngredientID($query, $id)
+    {
+        return !$id ? $query : $query->where('ingredient_id', $id);
+    }
 }
