@@ -52,7 +52,7 @@ class RecipesSeeder extends Seeder
 
         $recipes->each(function ($recipe) use ($ingredients){
             $ingredients->each(function ($ingredient) use ($recipe){
-                $ingredient->recipes()->attach($recipe->id, ['quantity' => rand(1, 9)]);
+                $ingredient->recipes()->attach($recipe->id, ['quantity' => rand(1, 3)]);
             });
         });
 
