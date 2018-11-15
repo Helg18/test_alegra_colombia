@@ -46,7 +46,8 @@ class OrderController extends Controller
 
         } catch (\Exception $exception){
             logger("An error has been occurred while tried save a new order. ". $exception->getMessage());
-            return redirect()->back()->withErrors($exception->getMessage());
+            session()->flash('error', $exception->getMessage());
+            return redirect()->route('home')->withErrors($exception->getMessage());
         }
 
         // Return response
