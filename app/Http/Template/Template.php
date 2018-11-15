@@ -89,7 +89,7 @@ abstract class Template
 
         // Itering ingredients to check if is availables in store
         foreach ($ingredients as $ingredient) {
-            $stored = $this->storeRepository->search(['ingredient_id' => $ingredient->id])->get();
+            $stored = $this->storeRepository->search(['ingredient_id' => $ingredient->id])->first();
             $needed = $ingredient->pivot->quantity;
 
             // Removing from store if available

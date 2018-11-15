@@ -24,6 +24,10 @@ class StoreRepository extends AbstractRepository
             $query->distinct();
         }
 
+        if (isset($filters['ingredient_id']) && $filters['ingredient_id']){
+            $query->ofIngredientID($filters['ingredient_id']);
+        }
+
         return $query->orderBy('stores.id', 'desc');
     }
 

@@ -21,4 +21,9 @@ class Store extends Model
     {
         return $this->ingredient ? $this->ingredient->name : null;
     }
+
+    public function scopeOfIngredientID($query, $id)
+    {
+        return !$id ? $query : $query->where('ingredient_id', $id);
+    }
 }
