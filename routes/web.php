@@ -1,6 +1,11 @@
 <?php
 
 Route::get('/', function () {
+
+//    $client = new \App\Services\AlegraMarketplaceService();
+//
+//    $res = $client->request('lemon');
+//    dd($res);
     return view('welcome');
 })->name('home');
 
