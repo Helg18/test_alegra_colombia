@@ -115,7 +115,7 @@ abstract class Template
         if ($missing && isset($this->ingredientsMissing)){
             // Returning Ingredients to store
             foreach ($this->ingredientsObtained as $key => $value) {
-                $ingredient = $this->storeRepository->getById($key);
+                $ingredient = $this->storeRepository->search(['ingredient_id' => $key])->first();
                 $this->storeRepository->update($ingredient, ['quantity' => $ingredient->quantity + $value]);
 
                 $requisition = [
