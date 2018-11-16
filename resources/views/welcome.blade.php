@@ -11,12 +11,12 @@
         </form>
 
         <div class="links">
-            <a href="{{route('order.index')}}">View Orders</a>
-            <a href="{{route('ingredient.index')}}">View Ingredients</a>
-            <a href="{{route('recipe.index')}}">View Recipes</a>
-            <a href="{{route('purchase.index')}}">View Purchases</a>
-            <a href="{{route('store.index')}}">View Stores</a>
-            <a href="{{route('requisition.index')}}">View Requisitions</a>
+            <a href="{{route('order.index')}}">Orders</a>
+            <a href="{{route('ingredient.index')}}">Ingredients</a>
+            <a href="{{route('recipe.index')}}">Recipes</a>
+            <a href="{{route('purchase.index')}}">Purchases</a>
+            <a href="{{route('store.index')}}">Store</a>
+            <a href="{{route('requisition.index')}}">Requisitions</a>
         </div>
     </div>
 </div>

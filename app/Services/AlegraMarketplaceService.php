@@ -28,17 +28,29 @@ class AlegraMarketplaceService
         $this->url         = env('MARKETPLACE_URL');
     }
 
-    public function request($string)
+    public function request($string = '')
     {
         $client = new Client([
             'headers' => [
                 'User-Agent'     => self::$userAgent,
-                'Authorization'  => 'Basic '.$this->credentials
+                'Authorization'  => 'Basic '.$this->credentials,
             ]
         ]);
 
-        $response = $client->post($this->url.'/'.$string);
+        try {
+            $response = $client->get($this->url.'?ingredient='.$string);
+        } catch (\Exception $exception) {
+            throw new \Exception('The markedplace was close');
+        }
 
-        return $response;
+        $json = $response->getBody()->getContents();
+
+        return json_decode($json)->quantitySold;
     }
 }
+
+
+
+
+
+

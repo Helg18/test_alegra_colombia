@@ -3,9 +3,11 @@ namespace App\Http\Template;
 
 use App\Models\Order;
 use App\Repositories\OrderRepository;
+use App\Repositories\PurchaseRepository;
 use App\Repositories\RecipeRepository;
 use App\Repositories\RequisitionRepository;
 use App\Repositories\StoreRepository;
+use App\Services\AlegraMarketplaceService;
 
 abstract class Template
 {
@@ -35,6 +37,14 @@ abstract class Template
 
     /** @var $order */
     private $order;
+    /**
+     * @var AlegraMarketplaceService
+     */
+    private $alegraMarketplaceService;
+    /**
+     * @var PurchaseRepository
+     */
+    private $purchaseRepository;
 
     /**
      * Template constructor.
@@ -42,18 +52,24 @@ abstract class Template
      * @param StoreRepository $storeRepository
      * @param RequisitionRepository $requisitionRepository
      * @param OrderRepository $orderRepository
+     * @param AlegraMarketplaceService $alegraMarketplaceService
+     * @param PurchaseRepository $purchaseRepository
      */
     public function __construct(
                         RecipeRepository $recipeRepository,
                         StoreRepository $storeRepository,
                         RequisitionRepository $requisitionRepository,
-                        OrderRepository $orderRepository)
+                        OrderRepository $orderRepository,
+                        AlegraMarketplaceService $alegraMarketplaceService,
+                        PurchaseRepository $purchaseRepository)
     {
         $this->recipeRepository = $recipeRepository;
         $this->storeRepository = $storeRepository;
         $this->ingredientsMissing = null;
         $this->requisitionRepository = $requisitionRepository;
         $this->orderRepository = $orderRepository;
+        $this->alegraMarketplaceService = $alegraMarketplaceService;
+        $this->purchaseRepository = $purchaseRepository;
     }
 
     final public function prepare(Order $order)
@@ -61,7 +77,7 @@ abstract class Template
         $this->setRecipeToOrder($order);
         $this->getIngredientsFromStore();
         if (isset($this->ingredientsMissing)){
-            $this->pursacheIngredients();
+            $this->purchaseIngredients();
             $this->getIngredientsFromStore(true);
         }
         $this->changeOrderStatus();
@@ -92,6 +108,10 @@ abstract class Template
             $stored = $this->storeRepository->search(['ingredient_id' => $ingredient->id])->first();
             $needed = $ingredient->pivot->quantity;
 
+            if($needed == 0){
+                continue;
+            }
+
             // Removing from store if available
             if ($stored->quantity >= $needed){
                 $this->ingredientsObtained[$ingredient->id] = $needed;
@@ -116,17 +136,19 @@ abstract class Template
             // Returning Ingredients to store
             foreach ($this->ingredientsObtained as $key => $value) {
                 $ingredient = $this->storeRepository->search(['ingredient_id' => $key])->first();
-                $this->storeRepository->update($ingredient, ['quantity' => $ingredient->quantity + $value]);
+                if ($value > 0){
+                    $this->storeRepository->update($ingredient, ['quantity' => $ingredient->quantity + $value]);
 
-                $requisition = [
-                    'order_id'       => $this->order->id,
-                    'ingredient_id'  => $ingredient->ingredient_id,
-                    'quantity'       => $ingredient->quantity + $value,
-                    'description'    => "Returned ingredients to prepare order ".$this->order->id
-                ];
+                    $requisition = [
+                        'order_id'       => $this->order->id,
+                        'ingredient_id'  => $ingredient->ingredient_id,
+                        'quantity'       => $ingredient->quantity + $value,
+                        'description'    => "Returned ingredients to prepare order ".$this->order->id
+                    ];
 
-                // Store Record in requisition table
-                $this->requisitionRepository->create($requisition);
+                    // Store Record in requisition table
+                    $this->requisitionRepository->create($requisition);
+                }
 
             }
 
@@ -136,13 +158,31 @@ abstract class Template
         }
     }
 
-    private function pursacheIngredients()
+    private function purchaseIngredients()
     {
-        // call Service to do request api to pursache ingredients
+        foreach ($this->ingredientsMissing as $ingredient) {
+            // call Service to do request api to pursache ingredients
+            $buyed = $this->alegraMarketplaceService->request($ingredient->name);
 
-        // Write record in Pursaches ingredients
 
-        // Update store quantity
+            // Validating if purchase is success
+            if ($buyed > 0){
+
+                // Write record in Pursaches ingredients
+                $this->purchaseRepository->create([
+                    'ingredient_id' => $ingredient->id,
+                    'quantity'      => $buyed
+                ]);
+
+                // Update store quantity
+                $stored = $this->storeRepository->search(['ingredient_id' => $ingredient->id])->first();
+                $this->storeRepository->update($stored, [
+                    'quantity' => $buyed
+                ]);
+            }
+
+        }
+
     }
 
     private function changeOrderStatus()

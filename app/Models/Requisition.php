@@ -22,4 +22,9 @@ class Requisition extends Model
     {
         return $this->ingredient ? $this->ingredient->name : null;
     }
+
+    public function getRecipeName()
+    {
+        return $this->order ? $this->order->getPlateName() : null;
+    }
 }
